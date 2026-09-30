@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle del producto{% endblock %}
+
+{% block content %}
+
+{% if producto %}
+
+    <h2>{{ producto.marca }} {{ producto.nombre }}</h2>
+
+    <p><strong>SKU:</strong> {{ producto.sku }}</p>
+
+    <p><strong>Marca:</strong> {{ producto.marca }}</p>
+
+    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+
+    <p><strong>Stock:</strong> {{ producto.stock }}</p>
+
+    <p>
+        <strong>Categoría:</strong>
+        {{ producto.categoria.nombre }}
+    </p>
+
+    {% if producto.disponible %}
+        <p>Disponible</p>
+    {% else %}
+        <p>No disponible</p>
+    {% endif %}
+
+    <p>
+        <a href="{{ url_for('main.inicio') }}">
+            Volver a productos
+        </a>
+    </p>
+
+{% else %}
+
+    <h2>Producto no encontrado</h2>
+
+    <p>El producto solicitado no existe.</p>
+
+    <a href="{{ url_for('main.inicio') }}">
+        Volver a productos
+    </a>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Productos - Tienda Virtual{% endblock %}
+
+{% block content %}
+
+<h2>Productos</h2>
+
+<form method="get" action="{{ url_for('main.inicio') }}">
+    <label for="categoria_id">Filtrar por categoría:</label>
+
+    <select name="categoria_id" id="categoria_id">
+        <option value="">Todas las categorías</option>
+
+        {% for categoria in categorias %}
+            <option
+                value="{{ categoria.id }}"
+                {% if categoria.id == categoria_id %}selected{% endif %}
+            >
+                {{ categoria.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filtrar</button>
+</form>
+
+{% if productos %}
+
+    <div class="productos">
+
+        {% for producto in productos %}
+
+            <article class="producto">
+
+                <h3>{{ producto.marca }} {{ producto.nombre }}</h3>
+
+                <p><strong>SKU:</strong> {{ producto.sku }}</p>
+
+                <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+
+                <p>
+                    <strong>Stock:</strong> {{ producto.stock }}
+                </p>
+
+                {% if producto.disponible %}
+                    <p>Disponible</p>
+                {% else %}
+                    <p>No disponible</p>
+                {% endif %}
+
+                <a href="{{ url_for('main.detalle', sku=producto.sku) }}">
+                    Ver detalle
+                </a>
+
+            </article>
+
+        {% endfor %}
+
+    </div>
+
+{% else %}
+
+    <p>No hay productos disponibles.</p>
+
+{% endif %}
+
+{% endblock %}
